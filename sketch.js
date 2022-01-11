@@ -23,7 +23,7 @@ function setup() {
   bird = new Bird(100, 100)
 
   ground = new Ground(600, 390, 1200, 20)
-  platform = new Ground(150, 280, 300, 200)
+  platform = new Ground(150, 280, 600, 200)
 
   box1 = new Box(700, 320, 70, 70);
   box2 = new Box(920, 320, 70, 70);
