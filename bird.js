@@ -12,8 +12,8 @@ class Bird extends Base {
 
     display() {
       var position = this.body.position
-      position.x = mouseX
-      position.y = mouseY
+      //position.x = mouseX
+      //position.y = mouseY
       super.display ()
     }
     
