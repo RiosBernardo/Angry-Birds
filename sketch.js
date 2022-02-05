@@ -11,6 +11,7 @@ var log1, log2, log3, log4;
 var bird;
 var backgroundImage;
 var slingshot;
+var score = 0;
 
 function preload(){
     backgroundImage = loadImage("sprites/bg.png")
@@ -47,6 +48,8 @@ function setup() {
 
 function draw() {
   background(backgroundImage);
+
+  text('Pontuação: '+score, 1100, 30)
   Engine.update(engine);
 
   bird.display();
@@ -57,11 +60,13 @@ function draw() {
   box1.display();
   box2.display();
   pig1.display();
+  pig1.score();
   log1.display();
 
   box3.display();
   box4.display();
   pig2.display();
+  pig2.score();
   log2.display();
 
   box5.display ();
@@ -78,4 +83,10 @@ function mouseDragged (){
 
 function mouseReleased (){
   slingshot.fly()
+}
+
+function keyPressed (){
+  if (keyCode === 32){
+  slingshot.attach(bird.body)
+  }
 }
