@@ -10,12 +10,14 @@ var pig1, pig2;
 var log1, log2, log3, log4;
 var bird;
 var backgroundImage;
+var bg = "sprites/bg.png"
 var slingshot;
 var score = 0;
+var gameState = "start";
+var textColor = "black";
 
 function preload(){
-    backgroundImage = loadImage("sprites/bg.png")
-
+  defineFundo ()
 }
 
 function setup() {
@@ -43,13 +45,16 @@ function setup() {
   log4 = new Log(870, 120, 150, -PI/7)
 
   slingshot = new Slingshot(bird.body, {x: 300, y: 50})
-
 }
 
 function draw() {
-  background(backgroundImage);
+  if (backgroundImage) {
+    background(backgroundImage);
+  }
 
+  fill(textColor)
   text('Pontuação: '+score, 1100, 30)
+
   Engine.update(engine);
 
   bird.display();
@@ -74,19 +79,38 @@ function draw() {
   log4.display ();
 
   slingshot.display ();
-
 }
 
 function mouseDragged (){
-  Matter.Body.setPosition (bird.body, {x: mouseX, y: mouseY})
+  if (gameState !== "playing"){
+    Matter.Body.setPosition (bird.body, {x: mouseX, y: mouseY})
+    bird.trajectory = []
+  }
 }
 
 function mouseReleased (){
   slingshot.fly()
+  gameState = "playing"
 }
 
 function keyPressed (){
   if (keyCode === 32){
-  slingshot.attach(bird.body)
+    slingshot.attach(bird.body)
   }
+}
+
+async function defineFundo (){
+  var response = await fetch ("https://worldtimeapi.org/api/timezone/America/Sao_Paulo")
+  var responseJSON = await response.json ()
+  var hour = responseJSON.datetime.slice (11, 13)
+
+  if (hour >= 6 && hour <= 19){
+      bg = "sprites/bg.png"
+        textColor = "black"
+  } else {
+      bg = "sprites/bg2.jpg"
+      textColor = "white"
+  }
+
+  backgroundImage = loadImage(bg)
 }
